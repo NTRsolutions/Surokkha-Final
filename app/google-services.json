@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "272723779083",
+    "firebase_url": "https://surokkha-app.firebaseio.com",
+    "project_id": "surokkha-app",
+    "storage_bucket": "surokkha-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272723779083:android:33e76e15eccc99ea",
+        "android_client_info": {
+          "package_name": "com.example.user.surokkha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272723779083-4vtvuspvh6k89o36v6b9gli7cj72ojs6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.surokkha",
+            "certificate_hash": "783fe22e5fe420e13be1464475fb44b8935c306e"
+          }
+        },
+        {
+          "client_id": "272723779083-ntbf5e9uerqqu7oh0r37f6qm2n0gdc1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyUU0HoPyNjTpMq-oVMBQ_Rfhr_7iPwvo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272723779083-ntbf5e9uerqqu7oh0r37f6qm2n0gdc1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

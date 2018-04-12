@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_medicine"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="Medicine"
+        />
+    <item
+        android:id="@+id/menu_appointment"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="Appointment"
+        />
+    <item
+        android:id="@+id/menu_doctor"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Find Doctor"
+        />
+    <item
+        android:id="@+id/menu_hospital"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Find Hospital" />
+    <item
+        android:id="@+id/menu_note"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="Notes"
+        />
+    <item
+        android:id="@+id/menu_update"
+        android:icon="@drawable/ic_menu_share"
+        android:title="Check For Update" />
+    <item
+        android:id="@+id/menu_rate"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="Rate Us" />
+    <item
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="Log Out" />
+</menu>
