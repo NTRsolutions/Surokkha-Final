@@ -102,6 +102,60 @@ public class EditAppointment extends AppCompatActivity {
             }
         });
 
+/*
+        //AddPill Button Click
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String doctorName = etDoctor.getText().toString();
+                String  location= etLocation.getText().toString();
+                String  note= etNote.getText().toString();
+
+                //AddPill into Database
+                AppointmentData da = new AppointmentData(code,doctorName,location,date,time,note,active);
+                Log.d("Appoint Data Check", doctorName + " " + location +" "+ date + " " + time+" "+active);
+                dbHelper.updateAppointment(da);
+                Toast.makeText(getApplicationContext(), "Appointment "+code+" updated for "+ time, Toast.LENGTH_SHORT).show();
+                Log.d("Code Check", String.valueOf(code));
+
+
+                //Trigger Alarm
+                if (active.equals("true")) {
+                    AlarmHandler alarmHandler = new AlarmHandler();
+                    alarmHandler.startAppointmentAlarm(EditAppointment.this, doctorName, timeInMilis, (code + 10000));
+                    Log.d("Code Check for alarm", String.valueOf(code + 10000));
+                    Log.d("Time for alarm", String.valueOf(timeInMilis));
+                }
+                if (active.equals("false")) {
+                    AlarmHandler alarmHandler = new AlarmHandler();
+                    alarmHandler.cancelAppointment(EditAppointment.this,(code + 10000));
+                    Log.d("Code Check for alarm", String.valueOf(code + 10000));
+                    Log.d("Time for alarm", String.valueOf(timeInMilis));
+                }
+
+                Intent intent=new Intent(EditAppointment.this,ShowAppointment.class);
+                startActivity(intent);
+            }
+        });
+        //AddPill Button Click
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //AddPill into Database
+                dbHelper.deleteAppointment(code);
+                Toast.makeText(getApplicationContext(), "Appointment "+code+" deleted for "+ time, Toast.LENGTH_SHORT).show();
+                Log.d("Code Check", String.valueOf(code));
+
+                //Trigger Alarm
+                AlarmHandler alarmHandler = new AlarmHandler();
+                alarmHandler.cancelAppointment(EditAppointment.this, (code+10000));
+                Log.d("Code Check for alarm", String.valueOf(code+10000));
+                Log.d("Time for alarm", String.valueOf(timeInMilis));
+                Intent intent=new Intent(EditAppointment.this,ShowAppointment.class);
+                startActivity(intent);
+            }
+        });
+        */
     }
 
     public void timeDialogue(View view) {
@@ -188,7 +242,6 @@ public class EditAppointment extends AppCompatActivity {
         }
     };
 
-    //method for set value in views
     public void setValues(){
         //splitting date into parts
         String[] dateParts = appointmentData.get(0).getDate().split("-");
@@ -248,7 +301,7 @@ public class EditAppointment extends AppCompatActivity {
 
         return  true;
     }
-//method for update appointment
+
     public void updateAppointment() {
         String doctorName = etDoctor.getText().toString();
         String  location= etLocation.getText().toString();
@@ -278,9 +331,9 @@ public class EditAppointment extends AppCompatActivity {
 
         Intent intent=new Intent(EditAppointment.this,ShowAppointment.class);
         startActivity(intent);
+        finish();
     }
 
-    //method for delete appointment
     public void deleteAppointment() {
         //AddPill into Database
         dbHelper.deleteAppointment(code);
@@ -294,6 +347,7 @@ public class EditAppointment extends AppCompatActivity {
         Log.d("Time for alarm", String.valueOf(timeInMilis));
         Intent intent=new Intent(EditAppointment.this,ShowAppointment.class);
         startActivity(intent);
+        finish();
     }
 
     //formate time with AM,PM for button
@@ -333,6 +387,13 @@ public class EditAppointment extends AppCompatActivity {
         Date now = c.getTime();
         formattedDate = sdtf.format(now);
         return formattedDate;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), ShowAppointment.class));
+        finish();
     }
 
     }

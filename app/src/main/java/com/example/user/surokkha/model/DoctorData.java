@@ -18,6 +18,7 @@ public class DoctorData {
     private String visitingTime;
     private String phone1;
     private String phone2;
+    private String district;
 
     public DoctorData(int code, String doctorName, String speciality, String degree, String chamber, String location, String visitingTime, String phone1, String phone2) {
         this.code = code;
@@ -31,13 +32,14 @@ public class DoctorData {
         this.phone2 = phone2;
     }
 
-    public DoctorData(int code, String doctorName, String speciality, String degree, String chamber, String location) {
+    public DoctorData(int code, String doctorName, String speciality, String degree, String chamber, String location,String district) {
         this.code = code;
         this.doctorName = doctorName;
         this.speciality = speciality;
         this.degree = degree;
         this.chamber = chamber;
         this.location = location;
+        this.district = district;
     }
 
     public int getCode() {
@@ -111,5 +113,11 @@ public class DoctorData {
     public void setPhone2(String phone2) {
         this.phone2 = phone2;
     }
+    public String getDistrict() {
+        return district;
+    }
 
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 }

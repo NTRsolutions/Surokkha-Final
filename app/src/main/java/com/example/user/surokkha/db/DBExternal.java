@@ -193,8 +193,10 @@ public class DBExternal extends SQLiteOpenHelper {
                 speciality = cur.getString(2);
                 String degree = cur.getString(3);
                 String chamber = cur.getString(4);
-                location = cur.getString(5);
-                data.add(new DoctorData(code, doctorName, speciality, degree, chamber, location));
+                String roomNo = cur.getString(5);
+                location = cur.getString(6);
+                district=cur.getString(7);
+                data.add(new DoctorData(code, doctorName, speciality, degree, chamber, location,district));
 
             } while (cur.moveToNext());
         }
@@ -265,9 +267,10 @@ public class DBExternal extends SQLiteOpenHelper {
                 int code = cur.getInt(0);
                 String hospitalName = cur.getString(1);
                 location = cur.getString(2);
-                String phone = cur.getString(3);
+                district = cur.getString(3);
+                String phone = cur.getString(4);
 
-                data.add(new HospitalData(code, hospitalName, location,phone));
+                data.add(new HospitalData(code, hospitalName, location,district,phone));
 
             } while (cur.moveToNext());
         }

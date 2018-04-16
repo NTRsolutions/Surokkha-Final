@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.example.user.surokkha.R;
 import com.example.user.surokkha.activities.AddNote;
 import com.example.user.surokkha.model.NoteData;
@@ -46,9 +49,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         final NoteData obj = data.get(position);
 
         holder.title.setText(obj.getTitle());
+        holder.setReminderTitle(obj.getTitle());
         holder.note.setText(obj.getNote());
-        holder.date.setText( formatDate(obj.getDate()));
-        holder.time.setText(formatTime(obj.getTime()));
+        //holder.date.setText( formatDate(obj.getDate()));
+        String time=formatDate(obj.getDate())+" | "+formatTime(obj.getTime());
+        holder.time.setText(time);
         //holder.iv.setImageResource(R.drawable.image);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -75,21 +80,42 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         TextView title;
         TextView note;
-        TextView date;
+        //TextView date;
         TextView time;
-        //ImageView iv;
+        private ImageView iv , mThumbnailImage;
         CardView card;
+        private ColorGenerator mColorGenerator = ColorGenerator.DEFAULT;
+        private TextDrawable mDrawableBuilder;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tvNoteTitle);
             note = itemView.findViewById(R.id.tvNoteBody);
-            date = itemView.findViewById(R.id.tvDate_Note);
+            //date = itemView.findViewById(R.id.tvDate_Note);
             time = itemView.findViewById(R.id.tvTime_Note);
             // iv = itemView.findViewById(R.id.ivT1);
+            mThumbnailImage = (ImageView) itemView.findViewById(R.id.thumbnail_image);
             card = itemView.findViewById(R.id.card_note);
         }
+
+
+        // Set reminder title view
+        public void setReminderTitle(String title) {
+            String letter = "A";
+
+            if(title != null && !title.isEmpty()) {
+                letter = title.substring(0, 1);
+            }
+
+            int color = mColorGenerator.getRandomColor();
+
+            // Create a circular icon consisting of  a random background colour and first letter of title
+            mDrawableBuilder = TextDrawable.builder()
+                    .buildRound(letter, color);
+            mThumbnailImage.setImageDrawable(mDrawableBuilder);
+        }
     }
+
 
     //formate time with AM,PM
     public String formatTime(String time) {

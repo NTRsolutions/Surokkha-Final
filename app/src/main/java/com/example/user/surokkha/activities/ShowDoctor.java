@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
@@ -30,6 +32,7 @@ public class ShowDoctor extends AppCompatActivity implements NavigationView.OnNa
     private ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    TextView emptyDoctor;
     ArrayList<DoctorData> obj = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +58,22 @@ public class ShowDoctor extends AppCompatActivity implements NavigationView.OnNa
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        emptyDoctor=findViewById(R.id.emptyDoctors);
+
         DBExternal dbExternal = new DBExternal(getApplicationContext());
 
         obj = dbExternal.showDoctor(speciality,district,location);
         Log.d("Check Db results", "Db obj length: "+obj.size());
-        DoctorAdapter adapter = new DoctorAdapter(this,obj);
-        recyclerView.setAdapter(adapter);
+
+        if(obj.size()>0) {
+            DoctorAdapter adapter = new DoctorAdapter(this, obj);
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            recyclerView.setVisibility(View.GONE);
+            emptyDoctor.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -87,4 +100,5 @@ public class ShowDoctor extends AppCompatActivity implements NavigationView.OnNa
         }
         return false;
     }
+
 }

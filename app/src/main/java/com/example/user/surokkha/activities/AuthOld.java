@@ -4,18 +4,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
+import com.example.user.surokkha.classes.SharedPrefManager;
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,17 +72,23 @@ public class AuthOld extends AppCompatActivity implements
 
     private TextView mStatusText;
     private TextView mDetailText;
+    private TextView timer;
+
+    private LinearLayout timerLayout;
 
     private EditText mPhoneNumberField;
     private EditText mVerificationField;
+    private EditText mNameField;
+   // private EditText mPasswordField;
 
     public static String userID;
     private Button mStartButton;
     private Button mVerifyButton;
     private Button mResendButton;
     private Button mSignOutButton;
-    private String contactno;
+    private String contactno, name;
     private Pinview smsCode;
+    int checkTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +104,17 @@ public class AuthOld extends AppCompatActivity implements
 
         mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
         mVerificationField = (EditText) findViewById(R.id.field_verification_code);
+        mNameField = (EditText) findViewById(R.id.field_name);
+        //mPasswordField = (EditText) findViewById(R.id.field_password);
         //smsCode = (Pinview) findViewById(R.id.sms_code);
 
         mStartButton = (Button) findViewById(R.id.button_start_verification);
         mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
         mResendButton = (Button) findViewById(R.id.button_resend);
+
+        timer = (TextView) findViewById(R.id.timer);
+
+        timerLayout = findViewById(R.id.timerLayout);
 
         // Assign click listeners
         mStartButton.setOnClickListener(this);
@@ -230,7 +246,7 @@ public class AuthOld extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+88"+phoneNumber,        // Phone number to verify
+                "+88" + phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -251,7 +267,7 @@ public class AuthOld extends AppCompatActivity implements
     private void resendVerificationCode(String phoneNumber,
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+88"+phoneNumber,        // Phone number to verify
+                "+88" + phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -288,27 +304,22 @@ public class AuthOld extends AppCompatActivity implements
                                         y.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(y);
 
-                                        SharedPreferences mPreferences;
-
-                                        mPreferences = getSharedPreferences("User", MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = mPreferences.edit();
-                                        editor.putString("saveuserid", userID);
-                                        editor.commit();
-
                                         //user exists, do something
+
+                                        //store user id in sharedprefMngr class
+                                        SharedPrefManager.getmInstance(getApplicationContext()).userLogin(userID);
+
                                     } else {
 
-                                        SharedPreferences mPreferences;
+                                        //store user id in sharedprefMngr class
+                                        SharedPrefManager.getmInstance(getApplicationContext()).userLogin(userID);
 
-                                        mPreferences = getSharedPreferences("User", MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = mPreferences.edit();
-                                        editor.putString("saveuserid", userID);
-                                        editor.commit();
-
+                                        //if user not exist in databse, then add
+                                        name = mNameField.getText().toString();
                                         contactno = mPhoneNumberField.getText().toString();
                                         //user does not exist, do something else
                                         myRef.child("users").child(userID).setValue("true");
-                                        //    myRef.child("users").child(userID).child("Name").setValue("true");
+                                        myRef.child("users").child(userID).child("Name").setValue(name);
                                         myRef.child("users").child(userID).child("contact").setValue(contactno);
 
 
@@ -386,8 +397,9 @@ public class AuthOld extends AppCompatActivity implements
                 break;
             case STATE_CODE_SENT:
                 // Code sent state, show the verification field, the
-                enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
-                disableViews(mStartButton);
+                //enableViews(mVerifyButton, mResendButton, mVerificationField);
+                //disableViews(mStartButton, mNameField, mPhoneNumberField);
+
                 //  mDetailText.setText(R.string.status_code_sent);
                 Toast.makeText(AuthOld.this, "code sent", Toast.LENGTH_LONG).show();
                 break;
@@ -471,16 +483,19 @@ public class AuthOld extends AppCompatActivity implements
                     return;
                 }
 
-                mStartButton.setBackgroundColor(pink);
-
                 startPhoneNumberVerification(mPhoneNumberField.getText().toString());
 
-                mResendButton.setVisibility(View.VISIBLE);
+                //start count down timer
+                setTimer();
+
+                //mResendButton.setVisibility(View.VISIBLE);
+
+                mStartButton.setVisibility(View.GONE);
+                mPhoneNumberField.setVisibility(View.GONE);
+                mNameField.setVisibility(View.GONE);
                 mVerificationField.setVisibility(View.VISIBLE);
                 mVerifyButton.setVisibility(View.VISIBLE);
-                mStartButton.setVisibility(View.INVISIBLE);
-                mPhoneNumberField.setVisibility(View.INVISIBLE);
-
+                timerLayout.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.button_verify_phone:
@@ -497,5 +512,33 @@ public class AuthOld extends AppCompatActivity implements
                 break;
 
         }
+    }
+
+    private void setTimer() {
+        checkTimer = 1;
+
+        //show loading screen
+        //enableViews(mVerificationField, mVerifyButton, timerLayout);
+        //disableViews(mStartButton, mPhoneNumberField, mNameField, tvLogin);
+        //enableViews(mVerifyButton, mResendButton, mVerificationField, timerLayout, tvDRC, tvVerifyCode, tvPLTVC);
+
+        //time to show retry button
+        new CountDownTimer(45000, 1000) {
+            @Override
+            public void onTick(long l) {
+                timer.setText("0:" + l / 1000 + " s");
+                mResendButton.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                timer.setText(0 + " s");
+                mResendButton.startAnimation(AnimationUtils.loadAnimation(AuthOld.this, R.anim.slide_from_right));
+                mResendButton.setVisibility(View.VISIBLE);
+
+                checkTimer = 0;
+            }
+        }.start();
+        //timer ends here
     }
 }

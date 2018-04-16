@@ -4,38 +4,38 @@
 
     <item
         android:id="@+id/menu_medicine"
-        android:icon="@drawable/ic_menu_slideshow"
-        android:title="Medicine"
+        android:icon="@drawable/pill_nav_24"
+        android:title="Pill Reninder"
         />
     <item
         android:id="@+id/menu_appointment"
-        android:icon="@drawable/ic_menu_gallery"
-        android:title="Appointment"
+        android:icon="@drawable/appointment_nav_24"
+        android:title="Appointments"
         />
     <item
         android:id="@+id/menu_doctor"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@drawable/person_nav_24"
         android:title="Find Doctor"
         />
     <item
         android:id="@+id/menu_hospital"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/clinic_nav_24"
         android:title="Find Hospital" />
     <item
         android:id="@+id/menu_note"
-        android:icon="@drawable/ic_menu_slideshow"
-        android:title="Notes"
+        android:icon="@drawable/note_nav_24"
+        android:title="My Notes"
         />
     <item
         android:id="@+id/menu_update"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/check_nav_24"
         android:title="Check For Update" />
     <item
         android:id="@+id/menu_rate"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/love_nav_24"
         android:title="Rate Us" />
     <item
         android:id="@+id/menu_logout"
-        android:icon="@drawable/ic_menu_manage"
+        android:icon="@drawable/logout_nav_24"
         android:title="Log Out" />
 </menu>

@@ -110,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<PillData> showPill() {
         SQLiteDatabase sd = getReadableDatabase();
-        String query = "Select * from " + TABLE_NAME_Pill + " ";
+        String query = "Select * from " + TABLE_NAME_Pill + " group by pillName order by date,time ";
         Cursor cur = sd.rawQuery(query, null);
         ArrayList<PillData> data = new ArrayList<>();
 
@@ -196,7 +196,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public void deleteAlarm(int id) {
+    public void deletePill(int id) {
         SQLiteDatabase db = getWritableDatabase();
         String query = " Delete from " + TABLE_NAME_Pill + " where " + ID + " = '" + id + "'";
         db.execSQL(query);
@@ -220,7 +220,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public ArrayList<AppointmentData> showAppointment() {
         SQLiteDatabase sd = getReadableDatabase();
-        String query = "Select * from " + TABLE_NAME_Appointment + " ";
+        String query = "Select * from " + TABLE_NAME_Appointment + " order by date,time";
         Cursor cur = sd.rawQuery(query, null);
         ArrayList<AppointmentData> data = new ArrayList<>();
 
@@ -305,7 +305,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<NoteData> showNote() {
         SQLiteDatabase sd = getReadableDatabase();
-        String query = "Select * from " + TABLE_NAME_Note + " ";
+        String query = "Select * from " + TABLE_NAME_Note + " order by date,time desc";
         Cursor cur = sd.rawQuery(query, null);
         ArrayList<NoteData> data = new ArrayList<>();
 

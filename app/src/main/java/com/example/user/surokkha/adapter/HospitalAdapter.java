@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.user.surokkha.R;
-import com.example.user.surokkha.activities.EditAppointment;
 import com.example.user.surokkha.activities.HospitalDetails;
 import com.example.user.surokkha.model.DoctorData;
 import com.example.user.surokkha.model.HospitalData;
@@ -43,8 +42,9 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
         final HospitalData obj = data.get(position);
 
         holder.hospitalName.setText(obj.getHospitalName());
+        //String location=obj.getLocation()+", "+obj.getDistrict();
         holder.location.setText(obj.getLocation());
-        holder.iv.setImageResource(R.drawable.image);
+        //holder.iv.setImageResource(R.drawable.image);
 
 
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,6 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
                 Log.d(TAG, obj.getCode()+" "+obj.getHospitalName());
             }
         });
-
     }
 
     @Override
@@ -72,14 +71,14 @@ public class HospitalAdapter extends RecyclerView.Adapter<HospitalAdapter.ViewHo
 
         TextView hospitalName;
         TextView location;
-        ImageView iv;
+        //ImageView iv;
         CardView card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             hospitalName = itemView.findViewById(R.id.tvHospitalName);
             location = itemView.findViewById(R.id.tvHospitalLocation);
-            iv = itemView.findViewById(R.id.ivT1);
+            //iv = itemView.findViewById(R.id.ivT1);
             card=itemView.findViewById(R.id.card_hospital);
         }
     }

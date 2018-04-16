@@ -94,7 +94,6 @@ public class AddNote extends AppCompatActivity {
         return true;
     }
 
-    //method for save note button click
     public void saveNote() {
         title = etTitle.getText().toString();
         note = etNote.getText().toString();
@@ -126,12 +125,20 @@ public class AddNote extends AppCompatActivity {
         }
         Intent intent = new Intent(this, ShowNote.class);
         startActivity(intent);
+        finish();
     }
 
-    //method for delete note
     public void deleteNote() {
         dbHelper.deleteNote(id);
         Intent intent = new Intent(this, ShowNote.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), ShowNote.class));
+        finish();
     }
 }

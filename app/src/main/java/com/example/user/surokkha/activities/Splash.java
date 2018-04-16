@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.user.surokkha.R;
+import com.example.user.surokkha.classes.SharedPrefManager;
 
 public class Splash extends AppCompatActivity {
     @Override
@@ -13,11 +14,18 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        int secondsDelayed = 2;
+        int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(Splash.this, MainActivity.class));
-                finish();
+
+                if (!SharedPrefManager.getmInstance(getApplicationContext()).isLoggedIn()) {
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
+                }
+                else {
+                    startActivity(new Intent(Splash.this, HomeActivity.class));
+                    finish();
+                }
             }
         }, secondsDelayed * 1000);
     }

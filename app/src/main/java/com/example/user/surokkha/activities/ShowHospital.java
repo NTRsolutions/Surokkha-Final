@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
@@ -29,6 +31,7 @@ public class ShowHospital extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    TextView emptyHospital;
     ArrayList<HospitalData> obj = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +55,21 @@ public class ShowHospital extends AppCompatActivity implements NavigationView.On
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        emptyHospital=findViewById(R.id.emptyHospital);
+
         DBExternal dbExternal = new DBExternal(getApplicationContext());
 
         obj = dbExternal.showHospital(district,location);
         Log.d("Check Db results", "Db obj length: "+obj.size());
-        HospitalAdapter adapter = new HospitalAdapter(this,obj);
-        recyclerView.setAdapter(adapter);
+
+        if(obj.size()>0) {
+            HospitalAdapter adapter = new HospitalAdapter(this, obj);
+            recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setVisibility(View.GONE);
+            emptyHospital.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -84,4 +96,5 @@ public class ShowHospital extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
+
 }

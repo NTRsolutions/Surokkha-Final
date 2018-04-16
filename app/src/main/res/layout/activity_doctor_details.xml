@@ -1,142 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.DoctorDetails">
 
-    <include
-        android:id="@+id/include2"
-        layout="@layout/toolbar_layout" />
+    <include layout="@layout/toolbar_layout" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_doctorName"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        app:cardBackgroundColor="@color/colorPrimary"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include2">
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/tvDDName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Doctor Name"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </android.support.v7.widget.CardView>
+        <include layout="@layout/content_doctor_details"/>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_doctorName">
-
-        <LinearLayout
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigation_viw"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvDDDegree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Degree"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvDDSpeciality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Speciality"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_2">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-              android:id="@+id/tvDDChamber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Chamber"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvDDLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Location"
-                android:textSize="20sp" />
-            <TextView
-                android:id="@+id/tvDDVT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Visiting Time"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_call_doctor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp"
-        android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_3">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:text="Call"
-            android:drawableLeft="@drawable/country_flag_bd"
-            android:drawablePadding="10dp"
-            android:textSize="20sp" />
-    </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+            android:layout_gravity="start"
+            app:menu="@menu/nav_menu" />
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>

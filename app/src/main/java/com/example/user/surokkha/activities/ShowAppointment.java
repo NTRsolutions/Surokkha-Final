@@ -2,6 +2,7 @@ package com.example.user.surokkha.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
@@ -26,6 +29,8 @@ public class ShowAppointment extends AppCompatActivity implements NavigationView
     private ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    TextView emptyAppointment;
+    FloatingActionButton fab;
     ArrayList<AppointmentData> obj = new ArrayList<>();
 
     @Override
@@ -47,13 +52,28 @@ public class ShowAppointment extends AppCompatActivity implements NavigationView
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        emptyAppointment=findViewById(R.id.emptyAppointment);
+
+        fab=findViewById(R.id.fabAppointment);
+
         DBHelper dbHelper = new DBHelper(getApplicationContext());
+        obj=dbHelper.showAppointment();
 
-        obj = dbHelper.showAppointment();
+        if(obj.size()>0) {
+            AppointmentAdapter adapter = new AppointmentAdapter(this, obj);
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            recyclerView.setVisibility(View.GONE);
+            emptyAppointment.setVisibility(View.VISIBLE);
+        }
 
-        AppointmentAdapter adapter = new AppointmentAdapter(this, obj);
-        recyclerView.setAdapter(adapter);
+    }
 
+    public void fabBtn(View view){
+        Intent intent=new Intent(this,AddAppointment.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -80,5 +100,12 @@ public class ShowAppointment extends AppCompatActivity implements NavigationView
             finish();
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
     }
 }

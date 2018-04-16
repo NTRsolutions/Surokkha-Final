@@ -2,6 +2,7 @@ package com.example.user.surokkha.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
@@ -26,6 +29,8 @@ public class ShowPill extends AppCompatActivity implements NavigationView.OnNavi
     private ActionBarDrawerToggle drawerToggle;
     Toolbar toolbar;
     RecyclerView recyclerView;
+    TextView emptyPill;
+    FloatingActionButton fab;
     ArrayList<PillData> obj = new ArrayList<>();
 
     @Override
@@ -47,13 +52,28 @@ public class ShowPill extends AppCompatActivity implements NavigationView.OnNavi
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        emptyPill=findViewById(R.id.emptyPill);
+
+        fab=findViewById(R.id.fabPill);
+
         DBHelper dbHelper = new DBHelper(getApplicationContext());
+        obj=dbHelper.showPill();
 
-        obj = dbHelper.showPill();
+        if(obj.size()>0) {
+            PillAdapter adapter = new PillAdapter(this, obj);
+            recyclerView.setAdapter(adapter);
+        }
+        else{
+            recyclerView.setVisibility(View.GONE);
+            emptyPill.setVisibility(View.VISIBLE);
+        }
 
-        PillAdapter adapter = new PillAdapter(this,obj);
-        recyclerView.setAdapter(adapter);
+    }
 
+    public void fabBtn(View view){
+        Intent intent=new Intent(this,AddPill.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -79,6 +99,13 @@ public class ShowPill extends AppCompatActivity implements NavigationView.OnNavi
             finish();
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
     }
 }
 

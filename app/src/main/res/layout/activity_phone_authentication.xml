@@ -63,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
-
                 android:orientation="vertical">
 
                 <!--
@@ -80,54 +79,37 @@
                                     />
 
                 -->
-
                 <EditText
                     android:id="@+id/field_name"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:background="#90cecece"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Name"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:inputType="textPersonName"
-                    android:textColor="#545454"
-                    android:textColorHint="#545454"
-                    android:textSize="12dp"
-                    android:layout_marginTop="73dp"
+                    android:background="@drawable/corner_white_border"
                     />
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone number"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textColorHint="@color/white"
+                    android:background="@drawable/corner_white_border"
+                    android:inputType="phone"/>
 
-                <EditText
-                    android:id="@+id/field_phone_number"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:background="#90cecece"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:layout_centerHorizontal="true"
-                    android:hint="Phone Number  "
-                    android:inputType="phone"
-                    android:textColor="#545454"
-                    android:textColorHint="#545454"
-                    android:textSize="12dp"
-                    android:layout_marginTop="10dp"
-                    />
                 <EditText
                     android:id="@+id/field_password"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:background="#90cecece"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Password"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:inputType="textPassword"
-                    android:textColor="#545454"
-                    android:textColorHint="#545454"
-                    android:textSize="12dp"
-                    android:layout_marginTop="10dp"
+                    android:background="@drawable/corner_white_border"
                     />
-
 
                 <TextView
                     android:layout_width="match_parent"
@@ -149,7 +131,7 @@
                     android:paddingStart="16dp"
                     android:background="@drawable/corner_white_border"
                     android:layout_gravity="center"
-                    android:id="@+id/button_start_verification"
+                    android:id="@+id/loginButton"
                     android:textColor="@color/white"
                     />
             </LinearLayout>
@@ -161,7 +143,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
         android:background="@drawable/gradiennt1"
         android:id="@+id/inputCodeLayout"
         android:layout_alignParentTop="true"
@@ -188,32 +169,27 @@
             android:paddingTop="18dp"
             android:layout_marginBottom="20dp"
             />
+        <!--
+        <com.goodiebag.pinview.Pinview
+            android:id="@+id/sms_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pinWidth="30dp"
+            app:pinHeight="30dp"
+            app:pinLength="6"
+            app:cursorVisible="false"
+            app:forceKeyboard="false"
+            app:hint="0"
+            app:inputType="number"
+            app:password="false"/>
+            -->
         <EditText
-            android:id="@+id/field_verification_code"
-            android:layout_width="220dp"
-            android:layout_height="40dp"
-            android:background="@drawable/corner_white_border"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
-            android:hint="Code"
-            android:inputType="phone"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="12dp"
-            android:layout_marginTop="10dp"
-            />
-
-        <Button
-            android:id="@+id/button_verify_phone"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="15dp"
-            android:background="@drawable/corner_white_border"
-            android:textColor="@color/white"
-            android:text="verify"
-            android:layout_marginTop="10dp"/>
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/sms_code"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:background="@drawable/corner_white_border"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -257,7 +233,7 @@
             android:paddingStart="16dp"
             android:layout_marginTop="6dp"
             android:layout_gravity="center"
-            android:id="@+id/button_resend"
+            android:id="@+id/resend_code"
             android:background="@drawable/corner_white_border"
             android:textSize="12sp"
             android:textColor="@color/white"

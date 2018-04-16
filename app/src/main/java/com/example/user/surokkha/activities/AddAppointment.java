@@ -69,9 +69,9 @@ public class AddAppointment extends AppCompatActivity {
             }
         });
 
+
     }
 
-    //method for time button click
     public void timeDialogue(View view) {
         // ShowPill Date dialog
         showDialog(Time_id);
@@ -117,12 +117,15 @@ public class AddAppointment extends AppCompatActivity {
             mDay = day;
             calendar.set(mYear, mMonth, mDay, mHour, mMinute, 0);
             dateInMilis = calendar.getTimeInMillis();
+
+            timeInMilis = calendar.getTimeInMillis();
             date = String.valueOf(mDay) + "-" + String.valueOf(mMonth) + "-" + String.valueOf(mYear);
             //dialogue returns month number less 1 but gives right milis
             newDate= String.valueOf(mDay) + "-" + String.valueOf(mMonth+1) + "-" + String.valueOf(mYear);
             btnDate.setText(formatDate());
             Log.d("new Date Check", date);
             Log.d("new Date milis Check", String.valueOf(dateInMilis));
+            Log.d("new time milis Check", String.valueOf(timeInMilis));
         }
     };
 
@@ -180,9 +183,19 @@ public class AddAppointment extends AppCompatActivity {
 
     //method for adding appointment
     public void insertAppointment() {
-        String doctorName = etDoctor.getText().toString();
-        String location = etLocation.getText().toString();
-        String note = etNote.getText().toString();
+
+        if(etDoctor.getText().toString().isEmpty()){
+            etDoctor.setError("Enter Doctor name");
+            return;
+        }
+        if(etLocation.getText().toString().isEmpty()){
+            etLocation.setError("Enter Chamber name");
+            return;
+        }
+
+        String doctorName = etDoctor.getText().toString().trim();
+        String location = etLocation.getText().toString().trim();
+        String note = etNote.getText().toString().trim();
         active = "true";
         int code;
 
@@ -200,6 +213,7 @@ public class AddAppointment extends AppCompatActivity {
         Log.d("Time for alarm", String.valueOf(timeInMilis));
         Intent intent = new Intent(AddAppointment.this, ShowAppointment.class);
         startActivity(intent);
+        finish();
     }
 
     ////set Date, and times
@@ -212,7 +226,7 @@ public class AddAppointment extends AppCompatActivity {
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = calendar.get(Calendar.MINUTE);
+        mMinute = calendar.get(Calendar.MINUTE);;
 
         calendar.set(mYear, mMonth, mDay, mHour, mMinute, 0);
 
@@ -261,5 +275,12 @@ public class AddAppointment extends AppCompatActivity {
         Date now = c.getTime();
         formattedDate = sdtf.format(now);
         return formattedDate;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), ShowAppointment.class));
+        finish();
     }
 }

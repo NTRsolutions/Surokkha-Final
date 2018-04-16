@@ -149,4 +149,11 @@ public class FindDoctor extends AppCompatActivity implements NavigationView.OnNa
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        finish();
+    }
 }

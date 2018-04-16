@@ -6,148 +6,223 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.surokkha.activities.EditPill">
 
-    <include layout="@layout/toolbar_layout"/>
+    <include
+        layout="@layout/toolbar_layout" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <EditText
-            android:id="@+id/etPN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Pill Name"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="74dp" />
-
-        <EditText
-            android:id="@+id/etQty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Quantity"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="133dp" />
-
-        <EditText
-            android:id="@+id/etUnit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Unit"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="196dp" />
-
-        <Button
-            android:id="@+id/btnStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="Start Date"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="247dp" />
-        <!--
-                <EditText
-                    android:id="@+id/etDuration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Duration"
-                    android:inputType="textPersonName" />
-
-                <Spinner
-                    android:id="@+id/spFrequency"
-                    android:gravity="center"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/frequency"
-                    />
-        -->
-        <Spinner
-            android:id="@+id/spNo"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/reminderNo"
-            android:gravity="center" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/time1"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="timeDialogue"
-                android:text="Time 1" />
+                android:text="Pill Name"
+                android:textColor="@color/colorAccent" />
 
-            <Button
-                android:id="@+id/time2"
+            <EditText
+                android:id="@+id/etPN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Pill Name"
+                android:padding="8dp"
+                android:inputType="textPersonName"
+                android:background="@drawable/edit_text_style"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".50"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quantity"
+                        android:textColor="@color/colorAccent" />
+
+                    <EditText
+                        android:id="@+id/etQty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantity"
+                        android:padding="7dp"
+                        android:background="@drawable/edit_text_style"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".50"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unit"
+                        android:textColor="@color/colorAccent" />
+                    <Spinner
+                        android:id="@+id/spUnit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/unit"
+                        android:gravity="center"
+                        android:background="@drawable/custom_spinner_background"/>
+<!--
+                    <EditText
+                        android:id="@+id/etUnit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Unit"
+                        android:padding="8dp"
+                        android:background="@drawable/edit_text_style"
+                        android:inputType="textPersonName" />
+                        -->
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="timeDialogue"
-                android:text="Time 2"
-                android:visibility="gone" />
+                android:text="Start Date"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent" />
 
             <Button
-                android:id="@+id/time3"
+                android:id="@+id/btnStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="Date"
+                android:textColor="@color/white"
+                android:background="@drawable/round_button"/>
+            <!--
+                    <EditText
+                        android:id="@+id/etDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:hint="Duration" />
+
+                    <Spinner
+                        android:id="@+id/spFrequency"
+                        android:gravity="center"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/frequency"
+                        />
+            -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="timeDialogue"
-                android:text="Time 3"
-                android:visibility="gone" />
+                android:text="Repeat"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent" />
 
-            <Button
-                android:id="@+id/time4"
+            <Spinner
+                android:id="@+id/spNo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/reminderNo"
+                android:gravity="center"
+                android:background="@drawable/custom_spinner_background"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="timeDialogue"
-                android:text="Time 4"
-                android:visibility="gone" />
+                android:text="Time"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/time1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time 1"
+                    android:textSize="12sp"
+                    android:layout_weight=".25"
+                    android:textColor="@color/white"
+                    android:onClick="timeDialogue"
+                    android:background="@drawable/round_button"/>
+                <Button
+                    android:id="@+id/time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time 2"
+                    android:textSize="12sp"
+                    android:layout_weight=".25"
+                    android:visibility="gone"
+                    android:onClick="timeDialogue"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"/>
+                <Button
+                    android:id="@+id/time3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time 3"
+                    android:textSize="12sp"
+                    android:layout_weight=".25"
+                    android:visibility="gone"
+                    android:onClick="timeDialogue"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"/>
+                <Button
+                    android:id="@+id/time4"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time 4"
+                    android:textSize="12sp"
+                    android:layout_weight=".25"
+                    android:onClick="timeDialogue"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminder"
+                    android:layout_weight=".5"
+                    android:textColor="@color/colorAccent" />
+                <Switch
+                    android:id="@+id/swActive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
         </LinearLayout>
-
-        <Switch
-            android:id="@+id/swActive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="On/Off    " />
-
-        <!--
-        <Button
-            android:id="@+id/Insert"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:text="Update"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:background="@color/colorAccent"
-            android:layout_margin="5dp"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="323dp" />
-        <Button
-            android:id="@+id/btnDeleteAlarm"
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:text="Delete"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:background="@color/colorAccent"
-            android:layout_margin="5dp"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="323dp" />
--->
-    </LinearLayout>
-
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

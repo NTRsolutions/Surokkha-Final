@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">Medi Help</string>
+    <string name="app_name">Shurokkha</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string-array name="unit">
+        <item>Pill</item>
+        <item>ML</item>
+        <item>Spoon</item>
+        <item>Drop</item>
+    </string-array>
     <string-array name="frequency">
         <item>Everyday</item>
         <item>Specific Days</item>

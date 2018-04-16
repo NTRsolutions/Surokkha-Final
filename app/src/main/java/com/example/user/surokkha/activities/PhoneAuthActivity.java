@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.surokkha.R;
+import com.example.user.surokkha.classes.SharedPrefManager;
 import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,20 +71,20 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private EditText mNameField;
     private EditText mVerificationField;
     private EditText mPhoneNumberField;
-    private EditText mPasswordField;
 
+    int checkTimer = 0;
     public static String userID;
     private Button mStartButton;
     private Button mVerifyButton;
     private Button mResendButton;
-    private String contactno;
+    private String contactno,name;
     private TextView timer;
-    private TextView tvSignUp,tvVerifyCode,tvDRC,tvPLTVC;
+    private TextView tvLogin, tvVerifyCode, tvDRC, tvPLTVC,tvSuccess;
     private Pinview smsCode;
 
     private LinearLayout timerLayout;
-    private LinearLayout layoutSignUp;
-    private LinearLayout layoutVerify;
+    private LinearLayout layoutSuccess;
+    private LinearLayout layoutMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,18 +101,18 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
         mVerificationField = (EditText) findViewById(R.id.field_verification_code);
         mNameField = (EditText) findViewById(R.id.field_name);
-        mPasswordField = (EditText) findViewById(R.id.field_password);
         //smsCode = (Pinview) findViewById(R.id.sms_code);
         timer = (TextView) findViewById(R.id.timer);
 
-        tvSignUp = (TextView) findViewById(R.id.tvSignUp);
+        tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvVerifyCode = (TextView) findViewById(R.id.tvVC);
         tvDRC = (TextView) findViewById(R.id.tvDRC);
         tvPLTVC = (TextView) findViewById(R.id.tvPTVC);
+        tvSuccess = (TextView) findViewById(R.id.tvSuccess);
 
         timerLayout = findViewById(R.id.timerLayout);
-        //layoutSignUp = findViewById(R.id.layoutSignUp);
-        //layoutVerify = findViewById(R.id.layoutVerify);
+        //layoutSuccess = findViewById(R.id.layoutSuccess);
+        layoutMain = findViewById(R.id.layoutMain);
 
         mStartButton = (Button) findViewById(R.id.button_start_verification);
         mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
@@ -312,27 +313,22 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         y.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(y);
 
-                                        SharedPreferences mPreferences;
-
-                                        mPreferences = getSharedPreferences("User", MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = mPreferences.edit();
-                                        editor.putString("saveuserid", userID);
-                                        editor.commit();
-
                                         //user exists, do something
+
+                                        //store user id in sharedprefMngr class
+                                        SharedPrefManager.getmInstance(getApplicationContext()).userLogin(userID);
+
                                     } else {
 
-                                        SharedPreferences mPreferences;
+                                        //store user id in sharedprefMngr class
+                                        SharedPrefManager.getmInstance(getApplicationContext()).userLogin(userID);
 
-                                        mPreferences = getSharedPreferences("User", MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = mPreferences.edit();
-                                        editor.putString("saveuserid", userID);
-                                        editor.commit();
-
+                                        //if user not exist in databse, then add
+                                        name=mNameField.getText().toString();
                                         contactno = mPhoneNumberField.getText().toString();
                                         //user does not exist, do something else
                                         myRef.child("users").child(userID).setValue("true");
-                                        //    myRef.child("users").child(userID).child("Name").setValue("true");
+                                        myRef.child("users").child(userID).child("Name").setValue(name);
                                         myRef.child("users").child(userID).child("contact").setValue(contactno);
 
 
@@ -404,8 +400,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         switch (uiState) {
             case STATE_INITIALIZED:
                 // Initialized state, show only the phone number field and start button
-                enableViews(mStartButton, mPhoneNumberField, mNameField, mPasswordField,tvSignUp);
-                disableViews(mVerifyButton, mResendButton, mVerificationField, timerLayout,tvDRC,tvVerifyCode,tvPLTVC);
+                //enableViews(mStartButton, mPhoneNumberField, mNameField, tvLogin);
+                //disableViews(mVerifyButton, mResendButton, mVerificationField, timerLayout, tvDRC, tvVerifyCode, tvPLTVC);
                 //enableViews(layoutSignUp);
                 //disableViews(layoutVerify);
                 break;
@@ -414,21 +410,20 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 //enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
                 //disableViews(mStartButton);
 
-                setTimer();
-
                 Toast.makeText(PhoneAuthActivity.this, "code sent", Toast.LENGTH_LONG).show();
                 break;
             case STATE_VERIFY_FAILED:
                 // Verification has failed, show all options
-                enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
-                        mVerificationField);
+
+                disableViews(mVerifyButton, mResendButton, mVerificationField, timerLayout, tvDRC, tvVerifyCode, tvPLTVC);
+                enableViews(mStartButton, mPhoneNumberField, mNameField, tvLogin);
                 //  mDetailText.setText(R.string.status_verification_failed);
                 Toast.makeText(PhoneAuthActivity.this, "verification failed", Toast.LENGTH_LONG).show();
                 break;
             case STATE_VERIFY_SUCCESS:
                 // Verification has succeeded, proceed to firebase sign in
-                disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
-                        mVerificationField);
+                //disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,mVerificationField,timerLayout);
+
                 //  mDetailText.setText(R.string.status_verification_succeeded);
 
                 Toast.makeText(PhoneAuthActivity.this, "verification success", Toast.LENGTH_LONG).show();
@@ -443,6 +438,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     }
                 }
 
+                disableViews(mVerifyButton, mVerificationField, timerLayout, tvDRC, tvVerifyCode, tvPLTVC);
+                enableViews(tvSuccess);
+
                 break;
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
@@ -450,6 +448,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 break;
             case STATE_SIGNIN_SUCCESS:
                 // Np-op, handled by sign-in check
+
                 break;
         }
 
@@ -470,7 +469,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     private boolean validatePhoneNumber() {
         String phoneNumber = mPhoneNumberField.getText().toString();
-        if (TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(phoneNumber)||phoneNumber.length()<11) {
             mPhoneNumberField.setError("Invalid phone number.");
             return false;
         }
@@ -496,16 +495,22 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_start_verification:
+
+                if(mNameField.getText().toString().isEmpty())
+                {
+                    mNameField.setError("Enter Name");
+                    return;
+                }
                 if (!validatePhoneNumber()) {
                     return;
                 }
-
                 //mStartButton.setBackgroundColor(pink);
 
-                //startPhoneNumberVerification(mPhoneNumberField.getText().toString());
-
-
+                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
                 setTimer();
+
+                disableViews(mStartButton, mPhoneNumberField, mNameField, tvLogin);
+                enableViews(mVerifyButton, mVerificationField, timerLayout, tvDRC, tvVerifyCode, tvPLTVC);
                 break;
             case R.id.button_verify_phone:
                 String code = mVerificationField.getText().toString();
@@ -517,39 +522,21 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
             case R.id.button_resend:
+                //set timer for resent code
+                setTimer();
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
+                mResendButton.setVisibility(View.INVISIBLE);
                 break;
         }
     }
 
 
     private void setTimer() {
-
-        //reset any erros
-        mPhoneNumberField.setError(null);
-
-
-        //get values from phone edit text and pass to countryPicker
-
-        boolean cancel = false;
-        View focusView = null;
-
-        //check if phone number is valid: I would just check the length
-        if (!isPhoneValid(mPhoneNumberField.getText().toString())) {
-
-            focusView = mPhoneNumberField;
-            cancel = true;
-        }
-
-        if (cancel) {
-            //there was an error in the length of phone
-            focusView.requestFocus();
-        } else {
+        checkTimer = 1;
 
             //show loading screen
             //enableViews(mVerificationField, mVerifyButton, timerLayout);
-            disableViews(mStartButton, mPhoneNumberField, mNameField, mPasswordField,tvSignUp);
-            enableViews(mVerifyButton, mResendButton, mVerificationField, timerLayout,tvDRC,tvVerifyCode,tvPLTVC);
+
 
             //time to show retry button
             new CountDownTimer(45000, 1000) {
@@ -564,14 +551,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     timer.setText(0 + " s");
                     mResendButton.startAnimation(AnimationUtils.loadAnimation(PhoneAuthActivity.this, R.anim.slide_from_right));
                     mResendButton.setVisibility(View.VISIBLE);
+
+                    checkTimer=0;
                 }
             }.start();
             //timer ends here
-        }
-    }
-
-    private boolean isPhoneValid(String phone) {
-        return phone.length() > 8;
     }
 
 }

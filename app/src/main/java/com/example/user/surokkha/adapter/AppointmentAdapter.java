@@ -49,25 +49,26 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         holder.doctorName.setText(obj.getDoctorName());
         holder.location.setText(obj.getLocation());
-        holder.date.setText( formatDate(obj.getDate()));
-        holder.time.setText(formatTime(obj.getTime()));
-        holder.iv.setImageResource(R.drawable.image);
+        //holder.date.setText( formatDate(obj.getDate()));
+        String time = formatDate(obj.getDate()) + " | " + formatTime(obj.getTime());
+        holder.time.setText(time);
+        //holder.iv.setImageResource(R.drawable.image);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Checking: "+obj.getCode()+" "+obj.getDoctorName()+" "+obj.getDate()+" "+obj.getTime());
+                Log.d(TAG, "Checking: " + obj.getCode() + " " + obj.getDoctorName() + " " + obj.getDate() + " " + obj.getTime());
 
-                Intent intent=new Intent(contex, EditAppointment.class);
-                intent.putExtra("code",obj.getCode());
-                intent.putExtra("doctorName",obj.getDoctorName());
-                intent.putExtra("location",obj.getLocation());
+                Intent intent = new Intent(contex, EditAppointment.class);
+                intent.putExtra("code", obj.getCode());
+                intent.putExtra("doctorName", obj.getDoctorName());
+                intent.putExtra("location", obj.getLocation());
                 intent.putExtra("date", obj.getDate());
-                intent.putExtra("time",obj.getTime());
-                intent.putExtra("note",obj.getNote());
-                intent.putExtra("active",obj.getActive());
+                intent.putExtra("time", obj.getTime());
+                intent.putExtra("note", obj.getNote());
+                intent.putExtra("active", obj.getActive());
                 contex.startActivity(intent);
-                Log.d(TAG, obj.getCode()+" "+obj.getDoctorName());
+                Log.d(TAG, obj.getCode() + " " + obj.getDoctorName());
             }
         });
 
@@ -82,19 +83,19 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         TextView doctorName;
         TextView location;
-        TextView date;
+        //TextView date;
         TextView time;
-        ImageView iv;
+        //ImageView iv;
         CardView card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             doctorName = itemView.findViewById(R.id.tvDoctorNAme_appointment);
             location = itemView.findViewById(R.id.tvLocation_appointment);
-            date = itemView.findViewById(R.id.tvDate_appointment);
+            //date = itemView.findViewById(R.id.tvDate_appointment);
             time = itemView.findViewById(R.id.tvTime_appointment);
-            iv = itemView.findViewById(R.id.ivT1);
-            card=itemView.findViewById(R.id.card_appointment);
+            //iv = itemView.findViewById(R.id.ivT1);
+            card = itemView.findViewById(R.id.card_appointment);
         }
     }
 
@@ -129,7 +130,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public String formatDate(String date) {
         String[] dateParts = date.split("-");
         int day = Integer.parseInt(dateParts[0]);
-        int month = (Integer.parseInt(dateParts[1])-1);
+        int month = (Integer.parseInt(dateParts[1]) - 1);
         int year = Integer.parseInt(dateParts[2]);
 
         String formattedDate;

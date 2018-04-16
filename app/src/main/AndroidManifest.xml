@@ -4,18 +4,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/team"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/team"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
-
-        </activity>
+        <activity android:name=".activities.MainActivity"></activity>
         <activity android:name=".activities.AddPill" />
         <activity android:name=".activities.ShowPill" />
 
@@ -39,17 +38,11 @@
         <activity android:name=".activities.FindHospital" />
         <activity android:name=".activities.ShowHospital" />
         <activity android:name=".activities.PhoneAuthActivity" />
-
-        <service android:name=".classes.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <activity android:name=".activities.AuthOld" />
+        <activity android:name=".activities.PhoneTestAuth" />
         <activity android:name=".activities.DoctorDetails" />
         <activity android:name=".activities.HospitalDetails" />
         <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.AuthOld" />
         <activity android:name=".activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,6 +50,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".classes.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".activities.AboutUs"></activity>
     </application>
 
 </manifest>

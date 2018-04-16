@@ -29,13 +29,13 @@ public class AlarmHandler {
         aIntent.putExtra("code", code);
         aIntent.putExtra("pillName", pillName);;
         aIntent.putExtra("unit",unit);
-        aIntent.putExtra("quantity",qty);
+        aIntent.putExtra("qty",qty);
         aIntent.putExtra("time", alarmTime);
         aIntent.putExtra("date", date);
         aIntent.putExtra("duration", duration);
         PendingIntent pIntent = PendingIntent.getBroadcast(context, code, aIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 60000, pIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pIntent);
         //pIntent.cancel();
         Log.d("Code from setAlarm", String.valueOf(code));
         Log.d("time from setAlarm", String.valueOf(time));
@@ -82,7 +82,7 @@ public class AlarmHandler {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         try {
-            java.util.Date mDate = sdf.parse(date);
+            Date mDate = sdf.parse(date);
             timeInMilliseconds = mDate.getTime();
             Log.d(TAG, "startNextAlarm: " + timeInMilliseconds);
         } catch (ParseException e) {

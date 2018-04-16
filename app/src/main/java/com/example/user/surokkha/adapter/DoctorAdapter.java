@@ -47,9 +47,11 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
         final DoctorData obj = data.get(position);
 
         holder.doctorName.setText(obj.getDoctorName());
-        holder.location.setText(obj.getLocation());
-        holder.iv.setImageResource(R.drawable.image);
-
+        holder.degree.setText(obj.getDegree());
+        holder.speciality.setText(obj.getSpeciality());
+        String chamber=obj.getChamber()+", "+obj.getDistrict();
+        holder.chamber.setText(chamber);
+        //holder.iv.setImageResource(R.drawable.image);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +70,6 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
                 Log.d(TAG, obj.getCode()+" "+obj.getDoctorName());
             }
         });
-
     }
 
     @Override
@@ -79,15 +80,18 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView doctorName;
-        TextView location;
-        ImageView iv;
+        TextView chamber;
+        TextView degree,speciality;
+        //ImageView iv;
         CardView card;
 
         public ViewHolder(View itemView) {
             super(itemView);
             doctorName = itemView.findViewById(R.id.tvDoctorNAme);
-            location = itemView.findViewById(R.id.tvDoctorLocation);
-            iv = itemView.findViewById(R.id.ivT1);
+            chamber = itemView.findViewById(R.id.tvDoctorChamber);
+            degree=itemView.findViewById(R.id.tvDoctorDegree);
+            speciality=itemView.findViewById(R.id.tvDoctorSpeciality);
+            //iv = itemView.findViewById(R.id.ivT1);
             card=itemView.findViewById(R.id.card_doctor);
         }
     }
